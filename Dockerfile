@@ -17,5 +17,12 @@ RUN set -x && \
   # Do not use version 1.8 because it require java 11.
   wget -O formatter.jar_ https://github.com/google/google-java-format/releases/download/google-java-format-1.7/google-java-format-1.7-all-deps.jar
 
+RUN set -x && ( \
+  echo "[mysqld]" && \
+  echo "collation-server=utf8mb4_unicode_ci" && \
+  echo "init-connect='SET NAMES utf8mb4'" && \
+  echo "character-set-server=utf8mb4" \
+  ) | tee /etc/mysql/conf.d/utf8mb4.cnf
+
 # set LANG=*.UTF-8 so that default file encoding will be UTF-8 and you can input non-ASCII chars in bash etc.
 ENV LANG=C.UTF-8
